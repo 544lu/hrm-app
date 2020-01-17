@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>公司部门人员岗位信息</title>
+    <!-- 浏览器标签图片 -->
+    <link rel="shortcut icon" href="../../topjui/images/tag.jpg"/>
+    <!-- TopJUI框架样式 -->
+    <link type="text/css" href="../../topjui/themes/default/topjui.core.min.css" rel="stylesheet">
+    <link type="text/css" href="../../topjui/themes/default/topjui.blue.css" rel="stylesheet" id="dynamicTheme"/>
+
+    <!-- FontAwesome字体图标 -->
+    <link type="text/css" href="../../static/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- layui框架样式 -->
+    <link type="text/css" href="../../static/plugins/layui/css/layui.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo.css">
+    <!-- jQuery相关引用 -->
+    <script type="text/javascript" src="../../jquery.min.js"></script>
+    <script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+    <!-- layui框架js -->
+    <script type="text/javascript" src="../../static/plugins/layui/layui.js" charset="utf-8"></script>
+</head>
+
+<body>
+<div data-toggle="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west',title:'',split:true,border:false,width:'18%',iconCls:'fa fa-sitemap',headerCls:'border_right',bodyCls:'border_right'">
+        <!-- treegrid表格 -->
+        <table data-toggle="easyui-treegrid"
+               data-options="id:'orgnizationTg',
+			   idField:'id',
+			   treeField:'text',
+			   singleSelect:true,
+			   url:remoteHost+'/hrm-app/getListByLevelId?levelId=1',
+			   expandUrl:remoteHost+'/hrm-app/getListByPid?pid={id}',
+			   onClickRow:changeIframe,
+			   childGrid: {
+                    grid: [
+                        {type: 'datagrid', id: 'productDg'},
+                    ]
+                }
+			   ">
+            <thead>
+            <tr>
+                <th data-options="field:'text',title:'机构名称'"></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div data-options="region:'center',iconCls:'icon-reload',title:'',split:true,border:false,bodyCls:'border_left'">
+        <div data-toggle="easyui-layout" data-options="fit:true">
+            <div data-options="region:'north',fit:false,split:true,border:false"
+                 style="height:7%">
+                <div style="width:400px;padding-top: 5px;padding-left: 5px;float: right;margin-right: 10px;">
+                    <input data-toggle="easyui-searchbox"
+                           data-options="prompt:'请输入',
+                           searcher:doSearch,
+                           menu:'#mm'">
+                    <div id="mm" style="width:120px">
+                        <div data-options="name:'overall',iconCls:'fa fa-heart'">全局搜索</div>
+                        <div data-options="name:'keywords',iconCls:'fa fa-key'">关键字</div>
+                        <div data-options="name:'name',iconCls:'fa fa-user-o'">姓名</div>
+                    </div>
+                </div>
+            </div>
+            <div data-options="region:'center',title:'',fit:false,split:true,border:false,bodyCls:'border_right_bottom'"
+                 style="height:92%">
+                <table data-toggle="easyui-datagrid"
+                       data-options="id: 'productDg',
+            url: remoteHost+'/hrm-app/getPageSet',
+            ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'employeeName',title:'员工姓名',width:265,sortable:true"></th>
+                            <th data-options="field:'departmentName',title:'部门',width:265,sortable:true"></th>
+                            <th data-options="field:'jobName',title:'岗位',width:265,sortable:true"></th>
+                            <th data-options="field:'id',title:'操作',width:265,align:'center',sortable:true,formatter:operateFormatter"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="product-dialog"></div>
+    <!-- 表格工具栏开始 -->
+    <!--
+    <div id="productDg-toolbar" class="topjui-toolbar"
+         data-options="grid:{
+           type:'datagrid',
+           id:'productDg'
+       }">
+
+        <a href="javascript:void(0)"
+           data-toggle="topjui-menubutton"
+           data-options="method:'openDialog',
+       iconCls:'fa fa-plus',
+       btnCls:'topjui-btn-green',
+       dialog:{
+           id:'userAddDialog',
+           href:_ctx + '/html/complex/dialog_add.html',
+           buttonsGroup:[
+               {text:'保存',url:_ctx + '/json/response/failure.json',iconCls:'fa fa-plus',handler:'ajaxForm',btnCls:'topjui-btn-brown'}
+           ]
+       }">新增表单</a>
+
+        <a href="javascript:void(0)"
+           data-toggle="topjui-menubutton"
+           data-options="method: 'openDialog',
+            iconCls: 'fa fa-eye',
+            btnCls: 'topjui-btn-brown',
+            grid: {
+                type: 'datagrid',
+                id: 'productDg'
+            },
+            dialog: {
+                width: 950,
+                height: 500,
+                href: _ctx + '/html/complex/dialog_edit.html?uuid={uuid}',
+                url: remoteHost+'/getById?id={id}',
+            }">查看信息</a>
+
+    </div>
+    -->
+
+<script>
+    function changeIframe(row) {
+
+        console.log(row.levelId);
+        var levelId = row.levelId;
+        var id = row.id;
+        if (levelId == 2 || levelId == 1) {
+            $("#productDg").datagrid({
+                childGrid: {
+                    grid: [
+                        {type: '', id: ''},
+                    ]
+                },
+            })
+        } else {
+            var queryParams = $('#productDg').datagrid('options').queryParams;
+            queryParams.name = "";
+            queryParams.value = "";
+            $("#productDg").datagrid({
+                queryParams: {
+                    id: id,
+                }
+            })
+            var queryParams = $('#productDg').datagrid('options').queryParams;
+        }
+        /**
+         //0. 在给后台给行数据设置个href字段，用于打开某个页面 这里我随机生成href
+         var hrfArray = _ctx + '/html/complex/dialog.html';
+
+         // 获取子节点
+         var childNodes = $("#orgnizationTg").iTreegrid('getChildren', row.id);
+         console.log(childNodes.length);
+         if (row.state == 'open' && childNodes.length == 0 && row.href) {//存在则改变为页面的href
+            $('#p').iPanel('refresh', hrfArray);
+        }else if (row.state == 'open' && childNodes.length == 0) {// 节点是打开的状态并且无子节点则打开默认页面
+            $('#p').iPanel('refresh', hrfArray);
+        }
+         **/
+    }
+
+    function progressFormatter(value, row, index) {
+        var htmlstr = '<div id="p" class="topjui-progressbar progressbar" data-options="value:' + value + '" style="width: 398px; height: 26px;">';
+        htmlstr += '<div class="progressbar-text" style="width: 398px; height: 26px; line-height: 26px;">' + value + '%</div>';
+        htmlstr += '<div class="progressbar-value" style="width: ' + value + '%; height: 26px; line-height: 26px;">';
+        htmlstr += '<div class="progressbar-text" style="width: 398px; height: 26px; line-height: 26px;">' + value + '%</div>';
+        htmlstr += '</div>';
+        htmlstr += '</div>';
+        return htmlstr;
+    }
+
+    function operateFormatter(value, row, index) {
+        var str = '<a href="#" name="opera" class="easyui-linkbutton" style="color: #00a65a" onclick="clickBtn('+row.id+')">查看</a>';
+        return str;
+    }
+
+    // 自定义方法
+    function myQuery() {
+        // 提示信息
+        $.iMessager.alert('自定义方法', '自定义方法被执行了！', 'messager-info');
+        // 提交参数查询表格数据
+        $('#productDg').iDatagrid('reload', {
+            name: $('#name').iTextbox('getValue'),
+            code: $('#code').iTextbox('getValue')
+        });
+    }
+
+    function doSearch(value, name) {
+        console.log(name + "==" + value);
+        $('#productDg').datagrid({
+            queryParams:{
+                value:value,
+                name:name
+            }
+        })
+        $('#productDg').datagrid('load');
+    }
+
+    function clickBtn(id) {
+        console.log(id);
+        var productWin = $('#product-dialog').dialog({
+            width: 950,
+            height: 500,
+            href: _ctx + '/html/complex/dialog_edit.html',
+            onOpen : function() {
+                $.ajax({
+                    url:remoteHost + '/hrm-app/getById?id='+id,
+                    dataType:"json",
+                    success:function(data){
+                        console.log(data.employeeName);
+                        $("#employeeName").iTextbox('setText',data.employeeName);
+                        $("#deptName").iTextbox('setText',data.deptName);
+                        $("#jobName").iTextbox('setText',data.jobName);
+                        if(data.mainWork1!=null){
+                            $("#mainWork1").iTextbox('setText',data.mainWork1);
+                            $("#mainWorkDes1").iTextbox('setText',data.mainWorkDes1);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作1');
+                        }
+                        if(data.mainWork2!=null){
+                            $("#mainWork2").iTextbox('setText',data.mainWork2);
+                            $("#mainWorkDes2").iTextbox('setText',data.mainWorkDes2);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作2');
+                        }
+                        if(data.mainWork3!=null){
+                            $("#mainWork3").iTextbox('setText',data.mainWork3);
+                            $("#mainWorkDes3").iTextbox('setText',data.mainWorkDes3);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作3');
+                        }
+                        if(data.mainWork4!=null){
+                            $("#mainWork4").iTextbox('setText',data.mainWork4);
+                            $("#mainWorkDes4").iTextbox('setText',data.mainWorkDes4);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作4');
+                        }
+                        if(data.mainWork5!=null){
+                            $("#mainWork5").iTextbox('setText',data.mainWork5);
+                            $("#mainWorkDes5").iTextbox('setText',data.mainWorkDes5);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作5');
+                        }
+                        if(data.mainWork6!=null){
+                            $("#mainWork6").iTextbox('setText',data.mainWork6);
+                            $("#mainWorkDes6").iTextbox('setText',data.mainWorkDes6);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作6');
+                        }
+                        if(data.mainWork7!=null){
+                            $("#mainWork7").iTextbox('setText',data.mainWork7);
+                            $("#mainWorkDes7").iTextbox('setText',data.mainWorkDes7);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作7');
+                        }
+                        if(data.mainWork8!=null){
+                            $("#mainWork8").iTextbox('setText',data.mainWork8);
+                            $("#mainWorkDes8").iTextbox('setText',data.mainWorkDes8);
+                        }else{
+                            $('#southTabs').iTabs('close','主要工作8');
+                        }
+                    }
+                });
+            },
+            title: '查看信息',
+            closed: true,
+            minimizable: false,
+            collapsible: false,
+            maximizable: false,
+            cache: false,
+            shadow: false
+        });
+        productWin.dialog('clear');
+        productWin.dialog('open');
+    }
+    /**
+    $(function(){
+        $("#productDg").iDialog({
+            onLoadSuccess:function(data){
+                $("a[name='opera']").iMenubutton({text:'下订单',plain:true,iconCls:'icon-add'});
+            }
+        });
+    });
+    **/
+
+</script>
+</body>
+</html>
