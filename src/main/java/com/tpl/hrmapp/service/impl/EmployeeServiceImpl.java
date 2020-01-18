@@ -130,4 +130,17 @@ public class EmployeeServiceImpl implements EmployeeService {
             e.printStackTrace();
         }
     }
+
+    //更新Employee删除状态
+    @Override
+    public Employee deleteEmployee(Employee employee) {
+        Employee ep = null;
+        try {
+            ep = employeeRepo.save(employee);
+        } catch (Exception e) {
+            log.error("更新Employee删除状态时出错");
+            e.printStackTrace();
+        }
+        return ep;
+    }
 }

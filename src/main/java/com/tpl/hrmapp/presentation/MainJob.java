@@ -98,33 +98,33 @@ public class MainJob {
         this.workInfo8 = workInfo8;
     }
 
-    public Job createJob(){
-        Job job =new Job();
+    public Job createJob() {
+        Job job = new Job();
         job.setId(this.id);
         job.setJobName(this.jobName);
         job.setDel(false);
-        if(StringUtils.isNotBlank(this.workInfo1.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo1.getWorkName())) {
             job.setMainWork1(this.workInfo1.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo2.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo2.getWorkName())) {
             job.setMainWork2(this.workInfo2.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo3.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo3.getWorkName())) {
             job.setMainWork3(this.workInfo3.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo4.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo4.getWorkName())) {
             job.setMainWork4(this.workInfo4.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo5.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo5.getWorkName())) {
             job.setMainWork5(this.workInfo5.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo6.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo6.getWorkName())) {
             job.setMainWork6(this.workInfo6.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo7.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo7.getWorkName())) {
             job.setMainWork7(this.workInfo7.getWorkName());
         }
-        if(StringUtils.isNotBlank(this.workInfo8.getWorkName())){
+        if (StringUtils.isNotBlank(this.workInfo8.getWorkName())) {
             job.setMainWork8(this.workInfo8.getWorkName());
         }
         return job;

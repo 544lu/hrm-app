@@ -24,4 +24,7 @@ public interface EmployeeService {
 
     //新增Employee
     void InsertEmployee(Employee employee);
+
+    //更新Employee删除状态
+    Employee deleteEmployee(Employee employee);
 }

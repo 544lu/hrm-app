@@ -56,7 +56,7 @@
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">
                 <div title="员工信息" style="padding:5px">
                     <table id="productDg" class="easyui-datagrid"
-                           data-options="url:'http://localhost:8000/getPageSet',method:'get',singleSelect:true,fit:true,fitColumns:true,pagination:true">
+                           data-options="url:'http://localhost:8000/getPageSet',method:'get',singleSelect:true,fit:true,fitColumns:true,pagination:true,toolbar:toolbar">
                         <thead>
                         <tr>
                             <th data-options="field:'employeeName',align:'center'" width="265">员工姓名</th>
@@ -113,8 +113,30 @@
         $('#productDg').datagrid('load');
     }
 
+    //菜单栏
+    var toolbar = [{
+        text:'添加',
+        iconCls:'icon-add',
+        handler:function(){
+            var productWin = $('#product-dialog').dialog({
+                width: 950,
+                height: 500,
+                href: '/hrm-web/html/layout/insert-page.html',
+                title: '添加人员',
+                closed: true,
+                minimizable: false,
+                collapsible: false,
+                maximizable: false,
+                cache: false,
+                shadow: false
+            });
+            productWin.dialog('clear');
+            productWin.dialog('open');
+        }
+    }];
+
     function operateFormatter(value, row, index) {
-        var str = '<a href="#" name="opera" class="easyui-linkbutton" style="color: #00a65a" onclick="clickBtn(' + row.id + ')">查看</a>';
+        var str = '<a href="#" name="opera" class="easyui-linkbutton" style="color: #00a65a" onclick="clickBtn(' + row.id + ')"><i class="fa fa-eye" aria-hidden="true"></i></a>';
         return str;
     }
 

@@ -26,4 +26,6 @@ public interface JobService {
     //岗位信息批量新增
     List<Job> insertJob(List<Job> jobList);
 
+    //岗位信息更新（岗位名称更新）
+    Job updateJob(Job job);
 }

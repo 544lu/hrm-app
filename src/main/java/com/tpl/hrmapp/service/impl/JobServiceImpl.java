@@ -126,4 +126,16 @@ public class JobServiceImpl implements JobService {
         }
         return jobs;
     }
+
+    @Override
+    public Job updateJob(Job job) {
+        Job jobUpdate = new Job();
+        try {
+            jobUpdate = jobRepo.save(job);
+        } catch (Exception e) {
+            log.error("更新岗位信息时出错");
+            e.printStackTrace();
+        }
+        return jobUpdate;
+    }
 }

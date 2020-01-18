@@ -33,4 +33,13 @@ public class WorkInfo {
     public void setMainWorkDes(String mainWorkDes) {
         this.mainWorkDes = mainWorkDes;
     }
+
+    public Job createWork() {
+        Job workContent = new Job();
+        workContent.setId(this.id);
+        workContent.setJobName(this.workName);
+        workContent.setDel(false);
+        workContent.setMainWork1(this.mainWorkDes);
+        return workContent;
+    }
 }
