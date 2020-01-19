@@ -63,7 +63,7 @@
                             <th data-options="field:'departmentName',align:'center'" width="265">部门</th>
                             <th data-options="field:'jobName',align:'center'" width="265">岗位</th>
                             <th data-options="field:'id',align:'center',formatter:operateFormatter"
-                                width="265">操作
+                                width="265">查看
                             </th>
                         </tr>
                         </thead>
@@ -132,6 +132,52 @@
             });
             productWin.dialog('clear');
             productWin.dialog('open');
+        }
+    },{
+        text:'编辑',
+        iconCls:'icon-edit',
+        handler:function(){alert('cut')}
+    },{
+        text:'删除',
+        iconCls:'icon-remove',
+        handler:function(){
+            var row = $('#productDg').datagrid('getSelected');
+            if(row){
+                console.log(row.id);
+                var employeeId=row.id;
+                $.ajax({
+                    url: 'http://localhost:8000/delete?id=' + employeeId,
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if(data.result=="success"){
+                            console.log("删除成功");
+                            $.messager.show({
+                                title:'操作提示',
+                                msg:'删除成功，请进行下一步操作！',
+                                timeout:5000,
+                                showType:'slide'
+                            });
+                        }else{
+                            console.log("删除失败");
+                            $.messager.show({
+                                title:'操作提示',
+                                msg:'删除失败，请确认是否具备操作权限或操作步骤正确！',
+                                timeout:5000,
+                                showType:'slide'
+                            });
+                        }
+                    }
+                });
+                $('#productDg').datagrid('load');
+            }else {
+                $.messager.show({
+                    title:'操作提示',
+                    msg:'请选择要删除数据！',
+                    timeout:5000,
+                    showType:'slide'
+                });
+            }
         }
     }];
 

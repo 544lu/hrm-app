@@ -26,5 +26,5 @@ public interface EmployeeService {
     void InsertEmployee(Employee employee);
 
     //更新Employee删除状态
-    Employee deleteEmployee(Employee employee);
+    String deleteEmployee(Employee employee);
 }

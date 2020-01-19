@@ -4,19 +4,16 @@ import com.tpl.hrmapp.domain.Department;
 import com.tpl.hrmapp.domain.Employee;
 import com.tpl.hrmapp.domain.Job;
 import com.tpl.hrmapp.presentation.DescriptionView;
+import com.tpl.hrmapp.presentation.HandleInfo;
 import com.tpl.hrmapp.presentation.MainJob;
 import com.tpl.hrmapp.service.DepartmentService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.tpl.hrmapp.service.EmployeeService;
 import com.tpl.hrmapp.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,25 +123,25 @@ public class ModifyController {
     /**
      * 删除部门人员
      */
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
     @ResponseBody
-    public String deleteEmployee(@RequestParam("id") Integer id) {
-        String result = "success";
+    public HandleInfo deleteEmployee(@RequestParam("id") Integer id) {
         if (id == null) {
-            return "false";
+            return new HandleInfo("false", "查询参数为空");
         }
 
         Employee employee = employeeService.selectById(id);
+        System.out.print(employee.getEmployeeName());
         if (employee == null) {
-            result = "false";
-            return result;
+            System.out.print(employee.getEmployeeName());
+            return new HandleInfo("false", "无对应数据");
         }
         employee.setDel(true);
-        Employee newEmployee = employeeService.deleteEmployee(employee);
-        if (newEmployee == null) {
-            result = "false";
-            return result;
+        String result = employeeService.deleteEmployee(employee);
+        if (result.equals("falure")) {
+            return new HandleInfo("false", "删除失败");
         }
-        return result;
+        return new HandleInfo("success", "删除成功");
     }
 }

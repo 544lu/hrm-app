@@ -75,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public Employee selectById(Integer id) {
-        Employee employee = new Employee();
+        Employee employee = null;
         try {
             employee = employeeRepo.getOne(id);
         } catch (Exception e) {
@@ -131,16 +131,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /**
+     * //更新Employee删除状态
+     *
+     * @Override public Employee deleteEmployee(Employee employee) {
+     * Employee ep = null;
+     * try {
+     * ep = employeeRepo.save(employee);
+     * } catch (Exception e) {
+     * log.error("更新Employee删除状态时出错");
+     * e.printStackTrace();
+     * }
+     * return ep;
+     * }
+     */
+
     //更新Employee删除状态
     @Override
-    public Employee deleteEmployee(Employee employee) {
-        Employee ep = null;
+    public String deleteEmployee(Employee employee) {
         try {
-            ep = employeeRepo.save(employee);
+            employeeRepo.delete(employee);
         } catch (Exception e) {
             log.error("更新Employee删除状态时出错");
             e.printStackTrace();
+            return "falure";
         }
-        return ep;
+        return "success";
     }
 }
