@@ -3,7 +3,7 @@ package com.tpl.hrmapp.presentation;
 import com.tpl.hrmapp.domain.Job;
 
 /**
- * 采集岗位信息
+ * 采集具体工作信息
  */
 public class WorkInfo {
     private Integer id;

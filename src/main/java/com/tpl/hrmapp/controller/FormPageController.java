@@ -178,10 +178,13 @@ public class FormPageController {
         Integer deptId = employee.getDepartmentId();
         Integer jobId = employee.getJobId();
         DescriptionView view = new DescriptionView();
+        view.setEmployeeId(employee.getId());
         view.setEmployeeName(employee.getEmployeeName());
         Department dept = departmentService.selectById(deptId);
+        view.setDeptId(dept.getId());
         view.setDeptName(dept.getText());
         Job job = jobService.selectById(jobId);
+        view.setJobId(job.getId());
         view.setJobName(job.getJobName());
         List<String> works = new ArrayList<>();
         if (job.getMainWork1() != null) {
@@ -219,34 +222,42 @@ public class FormPageController {
         for (String str : works) {
             Job mainJob = jobService.selectByPidAndJobName(jobId, str);
             if (mainJob != null && view.getMainWorkDes1() == null) {
+                view.setWork1Id(mainJob.getId());
                 view.setMainWorkDes1(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes2() == null) {
+                view.setWork2Id(mainJob.getId());
                 view.setMainWorkDes2(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes3() == null) {
+                view.setWork3Id(mainJob.getId());
                 view.setMainWorkDes3(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes4() == null) {
+                view.setWork4Id(mainJob.getId());
                 view.setMainWorkDes4(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes5() == null) {
+                view.setWork5Id(mainJob.getId());
                 view.setMainWorkDes5(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes6() == null) {
+                view.setWork6Id(mainJob.getId());
                 view.setMainWorkDes6(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes7() == null) {
+                view.setWork7Id(mainJob.getId());
                 view.setMainWorkDes7(mainJob.getMainWork1());
                 continue;
             }
             if (mainJob != null && view.getMainWorkDes8() == null) {
+                view.setWork8Id(mainJob.getId());
                 view.setMainWorkDes8(mainJob.getMainWork1());
                 continue;
             }

@@ -74,6 +74,8 @@
     </div>
 </div>
 <div id="product-dialog"></div>
+<div id="update-dialog"></div>
+<div id="insert-dialog"></div>
 <script>
     function changeIframe(row) {
 
@@ -115,13 +117,22 @@
 
     //菜单栏
     var toolbar = [{
-        text:'添加',
-        iconCls:'icon-add',
-        handler:function(){
-            var productWin = $('#product-dialog').dialog({
+        text: '添加',
+        iconCls: 'icon-add',
+        handler: function () {
+            var productWin = $('#insert-dialog').dialog({
                 width: 950,
                 height: 500,
                 href: '/hrm-web/html/layout/insert-page.html',
+                buttons: [
+                    {
+                        text: '添加',
+                        url: 'http://localhost:8000/json/response/success.json',
+                        iconCls: 'fa fa-save',
+                        handler: 'ajaxForm',
+                        btnCls: 'topjui-btn-green'
+                    }
+                ],
                 title: '添加人员',
                 closed: true,
                 minimizable: false,
@@ -133,49 +144,182 @@
             productWin.dialog('clear');
             productWin.dialog('open');
         }
-    },{
-        text:'编辑',
-        iconCls:'icon-edit',
-        handler:function(){alert('cut')}
-    },{
-        text:'删除',
-        iconCls:'icon-remove',
-        handler:function(){
+    }, {
+        text: '编辑',
+        iconCls: 'icon-edit',
+        handler: function () {
             var row = $('#productDg').datagrid('getSelected');
-            if(row){
+            if (row) {
+                var employeeId = row.id;
+                var editDialog = $('#product-dialog').dialog({
+                    width: 950,
+                    height: 500,
+                    href: '/hrm-web/html/layout/update-page.html',
+                    onOpen: function () {
+                        var rm = Math.random();
+                        $.ajax({
+                            url: 'http://localhost:8000/getById?id=' + employeeId + '&random=' + rm,
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data.employeeName);
+                                $('#employeeId').textbox('setValue', data.employeeId);
+                                $('#employeeName').textbox('setValue', data.employeeName);
+                                $('#deptId').textbox('setValue', data.deptId);
+                                $('#deptName').textbox('setValue', data.deptName);
+                                $('#jobId').textbox('setValue', data.jobId);
+                                $('#jobName').textbox('setValue', data.jobName);
+                                if (data.mainWork1) {
+                                    $('#work1Id').textbox('setValue', data.work1Id);
+                                    $('#mainWork1').textbox('setValue', data.mainWork1);
+                                    $('#mainWorkDes1').textbox('setValue', data.mainWorkDes1);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作1');
+                                }
+                                if (data.mainWork2) {
+                                    $('#work2Id').textbox('setValue', data.work2Id);
+                                    $('#mainWork2').textbox('setValue', data.mainWork2);
+                                    $('#mainWorkDes2').textbox('setValue', data.mainWorkDes2);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作2');
+                                }
+                                if (data.mainWork3) {
+                                    $('#work3Id').textbox('setValue', data.work3Id);
+                                    $('#mainWork3').textbox('setValue', data.mainWork3);
+                                    $('#mainWorkDes3').textbox('setValue', data.mainWorkDes3);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作3');
+                                }
+                                if (data.mainWork4) {
+                                    $('#work4Id').textbox('setValue', data.work4Id);
+                                    $('#mainWork4').textbox('setValue', data.mainWork4);
+                                    $('#mainWorkDes4').textbox('setValue', data.mainWorkDes4);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作4');
+                                }
+                                if (data.mainWork5) {
+                                    $('#work5Id').textbox('setValue', data.work5Id);
+                                    $('#mainWork5').textbox('setValue', data.mainWork5);
+                                    $('#mainWorkDes5').textbox('setValue', data.mainWorkDes5);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作5');
+                                }
+                                if (data.mainWork6) {
+                                    $('#work6Id').textbox('setValue', data.work6Id);
+                                    $('#mainWork6').textbox('setValue', data.mainWork6);
+                                    $('#mainWorkDes6').textbox('setValue', data.mainWorkDes6);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作6');
+                                }
+                                if (data.mainWork7) {
+                                    $('#work7Id').textbox('setValue', data.work7Id);
+                                    $('#mainWork7').textbox('setValue', data.mainWork7);
+                                    $('#mainWorkDes7').textbox('setValue', data.mainWorkDes7);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作7');
+                                }
+                                if (data.mainWork8) {
+                                    $('#work8Id').textbox('setValue', data.work8Id);
+                                    $('#mainWork8').textbox('setValue', data.mainWork8);
+                                    $('#mainWorkDes8').textbox('setValue', data.mainWorkDes8);
+                                } else {
+                                    $('#southTabs').tabs('close', '主要工作8');
+                                }
+                            }
+                        });
+                    },
+                    buttons: [
+                        {
+                            text: '更新',
+                            iconCls: 'fa fa-save',
+                            handler: function () {
+                                $.ajax({
+                                    type: "post",
+                                    dataType: "text",
+                                    url: 'http://localhost:8000/update',
+                                    data: $("form[name='myForm']").serialize(),//表单数据
+                                    success: function (data) {
+                                        console.log(data);
+                                        if (data.result == "success") {
+                                            console.log("更新成功");
+                                            $.messager.show({
+                                                title: '操作提示',
+                                                msg: '更新成功，请进行下一步操作！',
+                                                timeout: 5000,
+                                                showType: 'slide'
+                                            });
+                                        } else {
+                                            console.log("更新失败");
+                                            $.messager.show({
+                                                title: '操作提示',
+                                                msg: '更新失败，请确认是否具备操作权限或操作步骤正确！',
+                                                timeout: 5000,
+                                                showType: 'slide'
+                                            });
+                                        }
+                                    }
+                                });
+                            },
+                            btnCls: 'topjui-btn-green'
+                        }
+                    ],
+                    title: '更新信息',
+                    closed: true,
+                    minimizable: false,
+                    collapsible: false,
+                    maximizable: false,
+                    cache: false,
+                    shadow: false
+                });
+                editDialog.dialog('clear');
+                editDialog.dialog('open');
+            } else {
+                $.messager.show({
+                    title: '操作提示',
+                    msg: '请选择要编辑数据！',
+                    timeout: 5000,
+                    showType: 'slide'
+                });
+            }
+        }
+    }, {
+        text: '删除',
+        iconCls: 'icon-remove',
+        handler: function () {
+            var row = $('#productDg').datagrid('getSelected');
+            if (row) {
                 console.log(row.id);
-                var employeeId=row.id;
+                var employeeId = row.id;
                 $.ajax({
                     url: 'http://localhost:8000/delete?id=' + employeeId,
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
-                        if(data.result=="success"){
+                        if (data.result == "success") {
                             console.log("删除成功");
                             $.messager.show({
-                                title:'操作提示',
-                                msg:'删除成功，请进行下一步操作！',
-                                timeout:5000,
-                                showType:'slide'
+                                title: '操作提示',
+                                msg: '删除成功，请进行下一步操作！',
+                                timeout: 5000,
+                                showType: 'slide'
                             });
-                        }else{
+                        } else {
                             console.log("删除失败");
                             $.messager.show({
-                                title:'操作提示',
-                                msg:'删除失败，请确认是否具备操作权限或操作步骤正确！',
-                                timeout:5000,
-                                showType:'slide'
+                                title: '操作提示',
+                                msg: '删除失败，请确认是否具备操作权限或操作步骤正确！',
+                                timeout: 5000,
+                                showType: 'slide'
                             });
                         }
                     }
                 });
                 $('#productDg').datagrid('load');
-            }else {
+            } else {
                 $.messager.show({
-                    title:'操作提示',
-                    msg:'请选择要删除数据！',
-                    timeout:5000,
-                    showType:'slide'
+                    title: '操作提示',
+                    msg: '请选择要删除数据！',
+                    timeout: 5000,
+                    showType: 'slide'
                 });
             }
         }
@@ -193,9 +337,9 @@
             height: 500,
             href: '/hrm-web/html/layout/multiline.html',
             onOpen: function () {
-                var rm=Math.random();
+                var rm = Math.random();
                 $.ajax({
-                    url: 'http://localhost:8000/getById?id=' + id+'&random='+rm,
+                    url: 'http://localhost:8000/getById?id=' + id + '&random=' + rm,
                     dataType: "json",
                     success: function (data) {
                         console.log(data.employeeName);
@@ -253,6 +397,7 @@
                     }
                 });
             },
+            buttons: [],
             title: '查看信息',
             closed: true,
             minimizable: false,

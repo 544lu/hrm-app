@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>Multiline TextBox - jQuery EasyUI Demo</title>
+    <!-- FontAwesome字体图标 -->
+    <link type="text/css" href="../../themes/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- layui框架样式 -->
+    <link type="text/css" href="../../themes/layui/css/layui.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo.css">
+    <script type="text/javascript" src="../../jquery.min.js"></script>
+    <script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+    <!-- layui框架js -->
+    <script type="text/javascript" src="../../themes/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<div style="position:relative;margin:0 auto;padding:10px 15px">
+    <form method="post" class="layui-form" name="myForm">
+        <div style="margin-bottom:20px">
+            <input id="employeeId" type="hidden" class="easyui-textbox" name="EmployeeId">
+            <input id="employeeName" class="easyui-textbox" label="姓名:" labelPosition="left" readonly="true" name="employeeName"
+                   style="width:400px;margin-right: 10px;">
+            <input id="deptId" type="hidden" class="easyui-textbox" name="deptId">
+            <input id="deptName" class="easyui-textbox" label="部门:" labelPosition="left" readonly="true" name="deptName"
+                   style="width:400px;">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="jobId" type="hidden" class="easyui-textbox" name="JobId">
+            <input id="jobName" class="easyui-textbox" label="岗位:" labelPosition="left" readonly="true" name="jobName"
+                   style="width:400px;">
+        </div>
+        <div id="southTabs" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width:100%;height:250px">
+            <div title="主要工作1" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work1Id" type="hidden" class="easyui-textbox" name="workInfo1.id">
+                    <input id="mainWork1" class="easyui-textbox" name="workInfo1.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes1" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo1.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作2" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work2Id" type="hidden" class="easyui-textbox" name="workInfo2.id">
+                    <input id="mainWork2" class="easyui-textbox" name="workInfo2.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes2" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo2.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作3" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work3Id" type="hidden" class="easyui-textbox" name="workInfo3.id">
+                    <input id="mainWork3" class="easyui-textbox" name="workInfo3.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes3" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo3.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作4" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work4Id" type="hidden" class="easyui-textbox" name="workInfo4.id">
+                    <input id="mainWork4" class="easyui-textbox" name="workInfo4.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes4" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo4.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作5" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work5Id" type="hidden" class="easyui-textbox" name="workInfo5.id">
+                    <input id="mainWork5" class="easyui-textbox" name="workInfo5.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes5" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo5.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作6" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work6Id" type="hidden" class="easyui-textbox" name="workInfo6.id">
+                    <input id="mainWork6" class="easyui-textbox" name="workInfo6.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes6" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo6.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作7" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work7Id" type="hidden" class="easyui-textbox" name="workInfo7.id">
+                    <input id="mainWork7" class="easyui-textbox" name="workInfo7.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes7" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo7.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+            <div title="主要工作8" data-options="closable:true" style="padding:10px">
+                <div style="margin-bottom:10px;text-align: center;">
+                    <input id="work8Id" type="hidden" class="easyui-textbox" name="workInfo8.id">
+                    <input id="mainWork8" class="easyui-textbox" name="workInfo8.workName"
+                           style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="mainWorkDes8" class="easyui-textbox" multiline="true"
+                           value="This TextBox will allow the user to enter multiple lines of text."
+                           name="workInfo8.mainWorkDes" style="width:100%;height:120px">
+                </div>
+            </div>
+        </div>
+        <div id="tab-tools">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'"
+               onclick="addPanel()"></a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    var index = 8;
+
+    function addPanel() {
+        if(index<12) {
+            index++;
+            $('#southTabs').tabs('add', {
+                title: '新加工作',
+                content: '<div title="主要工作"' + index + ' style="padding:10px">' +
+                    '<div style="margin-bottom:10px;text-align: center;">' +
+                    '<input class="easyui-textbox" name="workInfo' + index + '.workName" style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">' +
+                    '</div>' +
+                    '<div style="margin-bottom:20px">' +
+                    '<input id="mainWorkDes1" class="easyui-textbox" multiline="true" name="workInfo' + index + '.mainWorkDes" style="width:100%;height:160px">' +
+                    '</div>' +
+                    '</div>',
+                closable: true
+            });
+        }else{
+            return;
+        }
+    }
+</script>
+</body>
+</html>

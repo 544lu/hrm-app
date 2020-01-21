@@ -8,16 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DescriptionView {
+    private Integer employeeId;
     private String employeeName;
+    private Integer deptId;
     private String deptName;
+    private Integer jobId;
     private String jobName;
+    private Integer work1Id;
     private String mainWork1;
+    private Integer work2Id;
     private String mainWork2;
+    private Integer work3Id;
     private String mainWork3;
+    private Integer work4Id;
     private String mainWork4;
+    private Integer work5Id;
     private String mainWork5;
+    private Integer work6Id;
     private String mainWork6;
+    private Integer work7Id;
     private String mainWork7;
+    private Integer work8Id;
     private String mainWork8;
     private String mainWorkDes1;
     private String mainWorkDes2;
@@ -180,6 +191,94 @@ public class DescriptionView {
         this.mainWorkDes8 = mainWorkDes8;
     }
 
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
+
+    public Integer getWork1Id() {
+        return work1Id;
+    }
+
+    public void setWork1Id(Integer work1Id) {
+        this.work1Id = work1Id;
+    }
+
+    public Integer getWork2Id() {
+        return work2Id;
+    }
+
+    public void setWork2Id(Integer work2Id) {
+        this.work2Id = work2Id;
+    }
+
+    public Integer getWork3Id() {
+        return work3Id;
+    }
+
+    public void setWork3Id(Integer work3Id) {
+        this.work3Id = work3Id;
+    }
+
+    public Integer getWork4Id() {
+        return work4Id;
+    }
+
+    public void setWork4Id(Integer work4Id) {
+        this.work4Id = work4Id;
+    }
+
+    public Integer getWork5Id() {
+        return work5Id;
+    }
+
+    public void setWork5Id(Integer work5Id) {
+        this.work5Id = work5Id;
+    }
+
+    public Integer getWork6Id() {
+        return work6Id;
+    }
+
+    public void setWork6Id(Integer work6Id) {
+        this.work6Id = work6Id;
+    }
+
+    public Integer getWork7Id() {
+        return work7Id;
+    }
+
+    public void setWork7Id(Integer work7Id) {
+        this.work7Id = work7Id;
+    }
+
+    public Integer getWork8Id() {
+        return work8Id;
+    }
+
+    public void setWork8Id(Integer work8Id) {
+        this.work8Id = work8Id;
+    }
+
     public Job createJob() {
         Job job = new Job();
         job.setJobName(this.getJobName());
@@ -212,7 +311,7 @@ public class DescriptionView {
     }
 
     public List<Job> createJobDes(Integer pid) {
-        List<Job> jobList=new ArrayList<>();
+        List<Job> jobList = new ArrayList<>();
         if (StringUtils.isNotBlank(this.getMainWork1())) {
             Job job = new Job();
             job.setJobName(this.getMainWork1());

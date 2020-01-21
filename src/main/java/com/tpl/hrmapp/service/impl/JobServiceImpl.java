@@ -92,6 +92,30 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> selectJobByPid(Integer pid) {
+        List<Job> jobs = new ArrayList<>();
+        try {
+            jobs = jobRepo.selectJobByPid(pid);
+        } catch (Exception e) {
+            log.error("根据pid查询Job时出错");
+            e.printStackTrace();
+        }
+        return jobs;
+    }
+
+    @Override
+    public String deleteJob(Job job) {
+        try {
+            jobRepo.delete(job);
+        } catch (Exception e) {
+            log.error("删除Job时出错");
+            e.printStackTrace();
+            return "false";
+        }
+        return "success";
+    }
+
+    @Override
     public List<Job> overallByJobName(String jobName) {
         List<Job> jobs = new ArrayList<>();
         try {
@@ -125,6 +149,18 @@ public class JobServiceImpl implements JobService {
             e.printStackTrace();
         }
         return jobs;
+    }
+
+    @Override
+    public Job insertJob(Job job) {
+        Job j = null;
+        try {
+            j = jobRepo.save(job);
+        } catch (Exception e) {
+            log.error("添加新的岗位信息时出错");
+            e.printStackTrace();
+        }
+        return j;
     }
 
     @Override

@@ -17,6 +17,12 @@ public interface JobService {
     //根据keywords查询job
     List<Job> selectJobByKeywords(String keywords);
 
+    //根据pid查询Job
+    List<Job> selectJobByPid(Integer pid);
+
+    //根据id删除Job
+    String deleteJob(Job job);
+
     //全局搜索
     List<Job> overallByJobName(String jobName);
 
@@ -25,6 +31,9 @@ public interface JobService {
 
     //岗位信息批量新增
     List<Job> insertJob(List<Job> jobList);
+
+    //岗位信息新增
+    Job insertJob(Job job);
 
     //岗位信息更新（岗位名称更新）
     Job updateJob(Job job);

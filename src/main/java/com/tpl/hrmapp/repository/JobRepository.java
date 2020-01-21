@@ -21,6 +21,10 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Query("select j from Job j where keywords like %?1%")
     List<Job> selectJobByKeywords(String keywords);
 
+    //根据pid查询Job
+    @Query("select j from Job j where pid = ?1")
+    List<Job> selectJobByPid(Integer pid);
+
     //全局搜索
     @Query("select j from Job j where jobName like %?1% and pid is null")
     List<Job> overallByJobName(String jobName);
