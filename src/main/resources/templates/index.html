@@ -234,13 +234,13 @@
                             handler: function () {
                                 $.ajax({
                                     type: "post",
-                                    dataType: "text",
+                                    dataType: "json",
                                     url: 'http://localhost:8000/update',
                                     data: $("form[name='myForm']").serialize(),//表单数据
                                     success: function (data) {
                                         console.log(data);
-                                        if (data.result == "success") {
-                                            console.log("更新成功");
+                                        if (data.result == 'success') {
+                                            console.log(data.result);
                                             $.messager.show({
                                                 title: '操作提示',
                                                 msg: '更新成功，请进行下一步操作！',
@@ -248,7 +248,6 @@
                                                 showType: 'slide'
                                             });
                                         } else {
-                                            console.log("更新失败");
                                             $.messager.show({
                                                 title: '操作提示',
                                                 msg: '更新失败，请确认是否具备操作权限或操作步骤正确！',

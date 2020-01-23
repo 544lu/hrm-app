@@ -37,6 +37,7 @@ public class ModifyController {
     /**
      * 新增人员及岗位信息
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     @ResponseBody
     public String insertEmployee(DescriptionView view) {
@@ -68,6 +69,7 @@ public class ModifyController {
     /**
      * 修改人员及岗位信息
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ResponseBody
     public HandleInfo updateEmployee(MainJob mainJob) {
@@ -152,7 +154,7 @@ public class ModifyController {
         for (Job jobOld : jobList) {
             int index = 1;
             for (Job jobNew : works) {
-                if (jobNew.getId() != null && jobNew.getId() == jobOld.getId()) {
+                if (jobNew.getId().intValue() == jobOld.getId().intValue()) {
                     jobService.updateJob(jobNew);
                     break;
                 }
