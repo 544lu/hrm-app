@@ -1,5 +1,6 @@
 package com.tpl.hrmapp.presentation;
 
+import com.tpl.hrmapp.domain.Employee;
 import com.tpl.hrmapp.domain.Job;
 import org.apache.commons.lang3.StringUtils;
 
@@ -168,6 +169,13 @@ public class MainJob {
 
     public void setWorkInfo12(WorkInfo workInfo12) {
         this.workInfo12 = workInfo12;
+    }
+
+    public Employee createEmployee(){
+        Employee employee=new Employee();
+        employee.setEmployeeName(this.employeeName);
+        employee.setDel(false);
+        return employee;
     }
 
     public Job createJob() {

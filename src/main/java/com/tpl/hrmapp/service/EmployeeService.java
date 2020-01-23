@@ -23,7 +23,7 @@ public interface EmployeeService {
     Employee selectByJobId(Integer jobId);
 
     //新增Employee
-    void InsertEmployee(Employee employee);
+    Employee InsertEmployee(Employee employee);
 
     //更新Employee删除状态
     String deleteEmployee(Employee employee);

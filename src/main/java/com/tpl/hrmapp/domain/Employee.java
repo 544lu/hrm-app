@@ -1,15 +1,13 @@
 package com.tpl.hrmapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "employee_tb")
 public class Employee {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     private String text;
     private String employeeName;

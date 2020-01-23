@@ -40,30 +40,101 @@ public class ModifyController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     @ResponseBody
-    public String insertEmployee(DescriptionView view) {
-        String result = "success";
-        Department dept = departmentService.selectByDeptName(view.getDeptName());
-        Job job = view.createJob();
-        List<Job> jobList1 = new ArrayList<>();
-        jobList1.add(job);
-        List<Job> jobs = jobService.insertJob(jobList1);
+    public HandleInfo insertEmployee(MainJob mainJob) {
+        Job job = mainJob.createJob();
 
-        Integer id = 0;
-        List<Job> jobList = new ArrayList<>();
-        if (jobs.size() != 0) {
-            id = jobs.get(0).getId();
-            jobList = view.createJobDes(id);
-        }
-        List<Job> jobList3 = jobService.insertJob(jobList);
-        if (jobList3.size() == 0) {
-            result = "false";
+        //保存人员岗位信息（岗位名称）
+        Job jobUpdate = jobService.updateJob(job);
+        //更新人员岗位信息失败
+        if (jobUpdate.getId() == null) {
+            return new HandleInfo("false", "更新人员岗位信息失败");
         }
 
-        Employee employee = view.createEmployee();
+        //获取工作内容
+        List<Job> works = new ArrayList<>();
+        if (mainJob.getWorkInfo1() != null) {
+            Job workContent1 = mainJob.getWorkInfo1().createWork();
+            workContent1.setPid(job.getId());
+            works.add(workContent1);
+        }
+        if (mainJob.getWorkInfo2() != null) {
+            Job workContent2 = mainJob.getWorkInfo2().createWork();
+            workContent2.setPid(job.getId());
+            works.add(workContent2);
+        }
+        if (mainJob.getWorkInfo3() != null) {
+            Job workContent3 = mainJob.getWorkInfo3().createWork();
+            workContent3.setPid(job.getId());
+            works.add(workContent3);
+        }
+        if (mainJob.getWorkInfo4() != null) {
+            Job workContent4 = mainJob.getWorkInfo4().createWork();
+            workContent4.setPid(job.getId());
+            works.add(workContent4);
+        }
+        if (mainJob.getWorkInfo5() != null) {
+            Job workContent5 = mainJob.getWorkInfo5().createWork();
+            workContent5.setPid(job.getId());
+            works.add(workContent5);
+        }
+        if (mainJob.getWorkInfo6() != null) {
+            Job workContent6 = mainJob.getWorkInfo6().createWork();
+            workContent6.setPid(job.getId());
+            works.add(workContent6);
+        }
+        if (mainJob.getWorkInfo7() != null) {
+            Job workContent7 = mainJob.getWorkInfo7().createWork();
+            workContent7.setPid(job.getId());
+            works.add(workContent7);
+        }
+        if (mainJob.getWorkInfo8() != null) {
+            Job workContent8 = mainJob.getWorkInfo8().createWork();
+            workContent8.setPid(job.getId());
+            works.add(workContent8);
+        }
+        if (mainJob.getWorkInfo9() != null) {
+            Job workContent9 = mainJob.getWorkInfo9().createWork();
+            workContent9.setPid(job.getId());
+            works.add(workContent9);
+        }
+        if (mainJob.getWorkInfo10() != null) {
+            Job workContent10 = mainJob.getWorkInfo10().createWork();
+            workContent10.setPid(job.getId());
+            works.add(workContent10);
+        }
+        if (mainJob.getWorkInfo11() != null) {
+            Job workContent11 = mainJob.getWorkInfo11().createWork();
+            workContent11.setPid(job.getId());
+            works.add(workContent11);
+        }
+        if (mainJob.getWorkInfo12() != null) {
+            Job workContent12 = mainJob.getWorkInfo12().createWork();
+            workContent12.setPid(job.getId());
+            works.add(workContent12);
+        }
+
+        for (Job jobInsert : works) {
+            Job j = jobService.insertJob(jobInsert);
+            if (j == null) {
+                return new HandleInfo("false", "添加操作失败");
+            }
+        }
+
+        //保存Employee
+        Department dept = departmentService.selectByDeptName(mainJob.getDeptName());
+        if (dept == null) {
+            return new HandleInfo("false", "部门名称输入有误");
+        }
+
+        Employee employee = mainJob.createEmployee();
         employee.setDepartmentId(dept.getId());
-        employee.setJobId(id);
-        employeeService.InsertEmployee(employee);
-        return result;
+        employee.setJobId(jobUpdate.getId());
+        Employee emp = employeeService.InsertEmployee(employee);
+        if (emp != null) {
+            return new HandleInfo("success", "添加操作成功");
+        } else {
+            return new HandleInfo("false", "添加操作失败");
+        }
     }
 
     /**

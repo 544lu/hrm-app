@@ -95,7 +95,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department selectByDeptName(String deptName) {
-        Department dept = new Department();
+        Department dept = null;
         try {
             dept = departmentRepo.selectDepartmentByDeptName(deptName);
         } catch (Exception e) {

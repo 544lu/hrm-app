@@ -122,13 +122,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void InsertEmployee(Employee employee) {
+    public Employee InsertEmployee(Employee employee) {
+        Employee emp = null;
         try {
-            employeeRepo.save(employee);
+            emp = employeeRepo.save(employee);
         } catch (Exception e) {
             log.error("新增/更新Employee时出错");
             e.printStackTrace();
         }
+        return emp;
     }
 
     /**

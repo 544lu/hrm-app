@@ -24,6 +24,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
     List<Department> selectDepartmentByPid(Integer pid);
 
     //根据deptName查询Department
-    @Query("select d from Department d where departmentName =?1")
+    @Query("select d from Department d where text =?1")
     Department selectDepartmentByDeptName(String deptName);
 }

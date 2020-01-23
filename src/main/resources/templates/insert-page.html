@@ -20,42 +20,54 @@
 </head>
 <body>
 <div style="position:relative;margin:0 auto;padding:10px 15px">
-    <div style="margin-bottom:20px">
-        <input id="employeeName" class="easyui-textbox" label="姓名:" labelPosition="left" style="width:400px;margin-right: 10px;">
-        <input id="deptName" class="easyui-textbox" label="部门:" labelPosition="left" style="width:400px;">
-    </div>
-    <div style="margin-bottom:20px">
-        <input id="jobName" class="easyui-textbox" label="岗位:" labelPosition="left" style="width:400px;">
-    </div>
-    <div id="southTabs" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width:100%;height:280px">
-    </div>
-    <div id="tab-tools">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'" onclick="addPanel()"></a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'" onclick="removePanel()"></a>
-    </div>
+    <form method="post" class="layui-form" name="myForm">
+        <div style="margin-bottom:20px">
+            <input id="employeeName" class="easyui-textbox" label="姓名:" labelPosition="left"
+                   name="employeeName" style="width:400px;margin-right: 10px;">
+            <input id="deptName" class="easyui-textbox" label="部门:" labelPosition="left" name="deptName" style="width:400px;">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="jobName" class="easyui-textbox" label="岗位:" labelPosition="left" name="jobName" style="width:400px;">
+        </div>
+        <div id="southTabs" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width:100%;height:280px">
+        </div>
+        <div id="tab-tools">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'"
+               onclick="addPanel()"></a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'"
+               onclick="removePanel()"></a>
+        </div>
+    </form>
 </div>
 <script type="text/javascript">
-    var index = 0;
-    function addPanel(){
-        index++;
-        $('#southTabs').tabs('add',{
-            title: '主要工作'+index,
-            content: '<div title="主要工作"'+index+' style="padding:10px">'+
-                '<div style="margin-bottom:10px;text-align: center;">'+
-            '<input class="easyui-textbox" style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">'+
-            '</div>'+
-            '<div style="margin-bottom:20px">'+
-            '<input id="mainWorkDes1" class="easyui-textbox" multiline="true" value="请输入具体工作内容" style="width:100%;height:160px">'+
-            '</div>'+
-            '</div>',
-            closable: true
-        });
+    var index = 1;
+
+    function addPanel() {
+        if (index < 12) {
+            $('#southTabs').tabs('add', {
+                title: '主要工作' + index,
+                content: '<div title="主要工作"' + index + ' style="padding:10px">' +
+                    '<div style="margin-bottom:10px;text-align: center;">' +
+                    '<input class="easyui-textbox" name="workInfo' + index + '.workName" style="width:400px;text-align: center;margin-bottom: 5px; margin-right: 10px;">' +
+                    '</div>' +
+                    '<div style="margin-bottom:20px">' +
+                    '<input id="mainWorkDes1" class="easyui-textbox" multiline="true" name="workInfo' + index + '.mainWorkDes" style="width:100%;height:160px">' +
+                    '</div>' +
+                    '</div>',
+                closable: true
+            });
+            index++;
+        } else {
+            return;
+        }
     }
-    function removePanel(){
+
+    function removePanel() {
         var tab = $('#southTabs').tabs('getSelected');
-        if (tab){
-            var index = $('#southTabs').tabs('getTabIndex', tab);
-            $('#southTabs').tabs('close', index);
+        if (tab) {
+            var id = $('#southTabs').tabs('getTabIndex', tab);
+            $('#southTabs').tabs('close', id);
+            index--;
         }
     }
 </script>
