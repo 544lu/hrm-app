@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,15 @@ public class ModifyController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     @ResponseBody
-    public HandleInfo insertEmployee(MainJob mainJob) {
+    public HandleInfo insertEmployee(MainJob mainJob,HttpServletRequest request) {
+        //验证操作是否被允许
+        /**
+         String requestUrl = request.getRemoteAddr();
+         if (!requestUrl.equals("10.122.4.200")) {
+             return new HandleInfo("false", "无相关操作权限！");
+         }
+         */
+
         Job job = mainJob.createJob();
 
         //保存Employee
@@ -143,7 +152,15 @@ public class ModifyController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ResponseBody
-    public HandleInfo updateEmployee(MainJob mainJob) {
+    public HandleInfo updateEmployee(MainJob mainJob,HttpServletRequest request) {
+        //验证操作是否被允许
+        /**
+         String requestUrl = request.getRemoteAddr();
+         if (!requestUrl.equals("10.122.4.200")) {
+             return new HandleInfo("false", "无相关操作权限！");
+         }
+         */
+
         Job job = mainJob.createJob();
 
         //获取工作内容
@@ -251,7 +268,14 @@ public class ModifyController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     @ResponseBody
-    public HandleInfo deleteEmployee(@RequestParam("id") Integer id) {
+    public HandleInfo deleteEmployee(@RequestParam("id") Integer id, HttpServletRequest request) {
+        //验证操作是否被允许
+        /**
+        String requestUrl = request.getRemoteAddr();
+        if (!requestUrl.equals("10.122.4.200")) {
+            return new HandleInfo("false", "无相关操作权限！");
+        }
+         */
         if (id == null) {
             return new HandleInfo("false", "查询参数为空");
         }
