@@ -43,6 +43,12 @@ public class ModifyController {
     public HandleInfo insertEmployee(MainJob mainJob) {
         Job job = mainJob.createJob();
 
+        //保存Employee
+        Department dept = departmentService.selectByDeptName(mainJob.getDeptName());
+        if (dept == null) {
+            return new HandleInfo("false", "部门名称输入有误");
+        }
+
         //保存人员岗位信息（岗位名称）
         Job jobUpdate = jobService.updateJob(job);
         //更新人员岗位信息失败
@@ -118,12 +124,6 @@ public class ModifyController {
             if (j == null) {
                 return new HandleInfo("false", "添加操作失败");
             }
-        }
-
-        //保存Employee
-        Department dept = departmentService.selectByDeptName(mainJob.getDeptName());
-        if (dept == null) {
-            return new HandleInfo("false", "部门名称输入有误");
         }
 
         Employee employee = mainJob.createEmployee();
