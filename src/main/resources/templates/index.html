@@ -129,43 +129,44 @@
                         text: '添加',
                         iconCls: 'fa fa-save',
                         handler: function () {
-                            console.log($('#deptName').val()+'1');
-                            console.log($('#employeeName').val()+'2');
-                            console.log($('#jobName').val()+'3');
-                            if ($('#employeeName').val() == '' || $('#deptName').val() == '' || $('#jobName').val() == '') {
-                                $.messager.show({
-                                    title: '操作提示',
-                                    msg: '请输入必填信息',
-                                    timeout: 5000,
-                                    showType: 'slide'
-                                });
-                            } else {
-                                $.ajax({
-                                    type: "post",
-                                    dataType: "json",
-                                    url: 'http://localhost:8000/insert',
-                                    data: $("form[name='myForm']").serialize(),//表单数据
-                                    success: function (data) {
-                                        console.log(data);
-                                        if (data.result == 'success') {
-                                            console.log(data.result);
-                                            $.messager.show({
-                                                title: '操作提示',
-                                                msg: '添加成功，请进行下一步操作！',
-                                                timeout: 5000,
-                                                showType: 'slide'
-                                            });
-                                        } else {
-                                            $.messager.show({
-                                                title: '操作提示',
-                                                msg: '添加失败，' + data.message,
-                                                timeout: 5000,
-                                                showType: 'slide'
-                                            });
-                                        }
+                            $.messager.confirm('确认提示', '确定要执行该操作吗?', function (r) {
+                                if (r) {
+                                    if ($('#employeeName').val() == '' || $('#deptName').val() == '' || $('#jobName').val() == '') {
+                                        $.messager.show({
+                                            title: '操作提示',
+                                            msg: '请输入必填信息',
+                                            timeout: 5000,
+                                            showType: 'slide'
+                                        });
+                                    } else {
+                                        $.ajax({
+                                            type: "post",
+                                            dataType: "json",
+                                            url: 'http://localhost:8000/insert',
+                                            data: $("form[name='myForm']").serialize(),//表单数据
+                                            success: function (data) {
+                                                console.log(data);
+                                                if (data.result == 'success') {
+                                                    console.log(data.result);
+                                                    $.messager.show({
+                                                        title: '操作提示',
+                                                        msg: '添加成功，请进行下一步操作！',
+                                                        timeout: 5000,
+                                                        showType: 'slide'
+                                                    });
+                                                } else {
+                                                    $.messager.show({
+                                                        title: '操作提示',
+                                                        msg: '添加失败，' + data.message,
+                                                        timeout: 5000,
+                                                        showType: 'slide'
+                                                    });
+                                                }
+                                            }
+                                        });
                                     }
-                                });
-                            }
+                                }
+                            });
                         },
                         btnCls: 'topjui-btn-green'
                     }
@@ -270,29 +271,33 @@
                             text: '更新',
                             iconCls: 'fa fa-save',
                             handler: function () {
-                                $.ajax({
-                                    type: "post",
-                                    dataType: "json",
-                                    url: 'http://localhost:8000/update',
-                                    data: $("form[name='myForm']").serialize(),//表单数据
-                                    success: function (data) {
-                                        console.log(data);
-                                        if (data.result == 'success') {
-                                            console.log(data.result);
-                                            $.messager.show({
-                                                title: '操作提示',
-                                                msg: '更新成功，请进行下一步操作！',
-                                                timeout: 5000,
-                                                showType: 'slide'
-                                            });
-                                        } else {
-                                            $.messager.show({
-                                                title: '操作提示',
-                                                msg: '更新失败，请确认是否具备操作权限或操作步骤正确！',
-                                                timeout: 5000,
-                                                showType: 'slide'
-                                            });
-                                        }
+                                $.messager.confirm('确认提示', '确定要执行该操作吗?', function (r) {
+                                    if (r) {
+                                        $.ajax({
+                                            type: "post",
+                                            dataType: "json",
+                                            url: 'http://localhost:8000/update',
+                                            data: $("form[name='myForm']").serialize(),//表单数据
+                                            success: function (data) {
+                                                console.log(data);
+                                                if (data.result == 'success') {
+                                                    console.log(data.result);
+                                                    $.messager.show({
+                                                        title: '操作提示',
+                                                        msg: '更新成功，请进行下一步操作！',
+                                                        timeout: 5000,
+                                                        showType: 'slide'
+                                                    });
+                                                } else {
+                                                    $.messager.show({
+                                                        title: '操作提示',
+                                                        msg: '更新失败，请确认是否具备操作权限或操作步骤正确！',
+                                                        timeout: 5000,
+                                                        showType: 'slide'
+                                                    });
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             },

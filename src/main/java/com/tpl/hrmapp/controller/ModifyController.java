@@ -43,12 +43,10 @@ public class ModifyController {
     @ResponseBody
     public HandleInfo insertEmployee(MainJob mainJob,HttpServletRequest request) {
         //验证操作是否被允许
-        /**
          String requestUrl = request.getRemoteAddr();
-         if (!requestUrl.equals("10.122.4.200")) {
-             return new HandleInfo("false", "无相关操作权限！");
+         if (!(requestUrl.equals("10.122.4.86")||requestUrl.equals("10.122.4.100")||requestUrl.equals("10.122.4.202"))) {
+             return new HandleInfo("false", "无相关操作权限！"+request.getRemoteAddr());
          }
-         */
 
         Job job = mainJob.createJob();
 
@@ -154,12 +152,10 @@ public class ModifyController {
     @ResponseBody
     public HandleInfo updateEmployee(MainJob mainJob,HttpServletRequest request) {
         //验证操作是否被允许
-        /**
          String requestUrl = request.getRemoteAddr();
-         if (!requestUrl.equals("10.122.4.200")) {
-             return new HandleInfo("false", "无相关操作权限！");
+         if (!(requestUrl.equals("10.122.4.86")||requestUrl.equals("10.122.4.100")||requestUrl.equals("10.122.4.202"))) {
+             return new HandleInfo("false", "无相关操作权限！"+request.getRemoteAddr());
          }
-         */
 
         Job job = mainJob.createJob();
 
@@ -270,12 +266,11 @@ public class ModifyController {
     @ResponseBody
     public HandleInfo deleteEmployee(@RequestParam("id") Integer id, HttpServletRequest request) {
         //验证操作是否被允许
-        /**
         String requestUrl = request.getRemoteAddr();
-        if (!requestUrl.equals("10.122.4.200")) {
-            return new HandleInfo("false", "无相关操作权限！");
+        if (!(requestUrl.equals("10.122.4.86")||requestUrl.equals("10.122.4.100")||requestUrl.equals("10.122.4.202"))) {
+            return new HandleInfo("false", "无相关操作权限！"+request.getRemoteAddr());
         }
-         */
+
         if (id == null) {
             return new HandleInfo("false", "查询参数为空");
         }
