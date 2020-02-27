@@ -160,4 +160,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return "success";
     }
+
+    //更新Employee
+    @Override
+    public Employee updateEmployee(Employee employee) {
+        Employee emp = null;
+        try {
+            emp = employeeRepo.save(employee);
+        } catch (Exception e) {
+            log.error("更新Employee时出错");
+            e.printStackTrace();
+        }
+        return emp;
+    }
 }
