@@ -50,7 +50,16 @@ public class ModifyController {
         //验证操作是否被允许
         String requestUrl = request.getRemoteAddr();
         if (!(requestUrl.equals("0:0:0:0:0:0:0:1") || requestUrl.equals("10.122.4.86") || requestUrl.equals("10.122.4.100") || requestUrl.equals("10.122.4.202"))) {
-            return new HandleInfo("false", "无相关操作权限！" + request.getRemoteAddr());
+            IpMapping ipMapping = new IpMapping();
+            boolean result = ipMapping.permissionVerif(requestUrl);
+            if (result == true) {
+                String deptName = ipMapping.limitOperation(requestUrl);
+                if (!deptName.equals(mainJob.getDeptName())) {
+                    return new HandleInfo("false", "无法添加人员进该部门！");
+                }
+            } else {
+                return new HandleInfo("false", "无相关操作权限！");
+            }
         }
 
         Job job = mainJob.createJob();
@@ -170,10 +179,10 @@ public class ModifyController {
             if (result == true) {
                 String deptName = ipMapping.limitOperation(requestUrl);
                 if (!deptName.equals(mainJob.getDeptName())) {
-                    return new HandleInfo("false", "无操作该部门权限！" + request.getRemoteAddr());
+                    return new HandleInfo("false", "无操作该部门权限！");
                 }
             } else {
-                return new HandleInfo("false", "无相关操作权限！" + request.getRemoteAddr());
+                return new HandleInfo("false", "无相关操作权限！");
             }
         }
 
@@ -315,9 +324,7 @@ public class ModifyController {
         }
 
         Employee employee = employeeService.selectById(id);
-        System.out.print(employee.getEmployeeName());
         if (employee == null) {
-            System.out.print(employee.getEmployeeName());
             return new HandleInfo("false", "无对应数据");
         }
 
@@ -329,10 +336,10 @@ public class ModifyController {
             if (re == true) {
                 String deptName = ipMapping.limitOperation(requestUrl);
                 if (!deptName.equals(dept.getText())) {
-                    return new HandleInfo("false", "无操作该部门权限！" + request.getRemoteAddr());
+                    return new HandleInfo("false", "无操作该部门权限！");
                 }
             } else {
-                return new HandleInfo("false", "无相关操作权限！" + request.getRemoteAddr());
+                return new HandleInfo("false", "无相关操作权限！");
             }
         }
 
@@ -340,6 +347,12 @@ public class ModifyController {
         String result = employeeService.deleteEmployee(employee);
         if (result.equals("falure")) {
             return new HandleInfo("false", "删除失败");
+        }
+
+        //添加记录
+        boolean operateRe = this.addModifyRecord(requestUrl, "删除", employee);
+        if (operateRe == false) {
+            log.info("操作：删除员工，写入历史记录失败");
         }
         return new HandleInfo("success", "删除成功");
     }
