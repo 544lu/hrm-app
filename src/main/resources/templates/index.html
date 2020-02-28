@@ -24,7 +24,7 @@
     <div data-options="region:'west',split:true" title="" style="width:18%;">
         <table title="" class="easyui-treegrid"
                data-options="
-                url: '10.122.4.235:8080/hrm-app/getListByLevelId',
+                url: 'http://localhost:8000/getListByLevelId',
                 method: 'get',
                 idField: 'id',
                 treeField: 'text',
@@ -56,7 +56,7 @@
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">
                 <div title="员工信息" style="padding:5px">
                     <table id="productDg" class="easyui-datagrid"
-                           data-options="url:'10.122.4.235:8080/hrm-app/getPageSet',method:'get',singleSelect:true,fit:true,fitColumns:true,pagination:true,toolbar:toolbar">
+                           data-options="url:'http://localhost:8000/getPageSet',method:'get',singleSelect:true,fit:true,fitColumns:true,pagination:true,toolbar:toolbar">
                         <thead>
                         <tr>
                             <th data-options="field:'employeeName',align:'center'" width="265">员工姓名</th>
@@ -142,7 +142,7 @@
                                         $.ajax({
                                             type: "post",
                                             dataType: "json",
-                                            url: '10.122.4.235:8080/hrm-app/insert',
+                                            url: 'http://localhost:8000/insert',
                                             data: $("form[name='myForm']").serialize(),//表单数据
                                             success: function (data) {
                                                 console.log(data);
@@ -197,7 +197,7 @@
                     onOpen: function () {
                         var rm = Math.random();
                         $.ajax({
-                            url: '10.122.4.235:8080/hrm-app/getById?id=' + employeeId + '&random=' + rm,
+                            url: 'http://localhost:8000/getById?id=' + employeeId + '&random=' + rm,
                             dataType: "json",
                             success: function (data) {
                                 console.log(data.employeeName);
@@ -276,7 +276,7 @@
                                         $.ajax({
                                             type: "post",
                                             dataType: "json",
-                                            url: '10.122.4.235:8080/hrm-app/update',
+                                            url: 'http://localhost:8000/update',
                                             data: $("form[name='myForm']").serialize(),//表单数据
                                             success: function (data) {
                                                 console.log(data);
@@ -335,7 +335,7 @@
                         console.log(row.id);
                         var employeeId = row.id;
                         $.ajax({
-                            url: '10.122.4.235:8080/hrm-app/delete?id=' + employeeId,
+                            url: 'http://localhost:8000/delete?id=' + employeeId,
                             dataType: "json",
                             success: function (data) {
                                 console.log(data);
@@ -386,7 +386,7 @@
             onOpen: function () {
                 var rm = Math.random();
                 $.ajax({
-                    url: '10.122.4.235:8080/hrm-app/getById?id=' + id + '&random=' + rm,
+                    url: 'http://localhost:8000/getById?id=' + id + '&random=' + rm,
                     dataType: "json",
                     success: function (data) {
                         console.log(data.employeeName);

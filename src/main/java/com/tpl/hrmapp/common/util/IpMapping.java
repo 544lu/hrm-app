@@ -49,6 +49,6 @@ public class IpMapping {
         ipEmployeeMap.put("10.122.64.85", "均安支公司");
         ipEmployeeMap.put("10.122.32.3", "三水营销服务部");
         ipEmployeeMap.put("10.122.4.104", "银保业务发展部");
-        ipEmployeeMap.put("10.122.4.103", "保费部");
+        ipEmployeeMap.put("10.122.4.103", "服务拓展部");
     }
 }
