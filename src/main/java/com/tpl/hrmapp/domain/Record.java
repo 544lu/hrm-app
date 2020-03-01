@@ -32,6 +32,8 @@ public class Record {
     //修改后的值
     private String afterVal;
 
+    public Record(){}
+
     public Record(String modifier,String operationCate,Employee em){
         this.modifier=modifier;
         this.modifyTime=new Date();

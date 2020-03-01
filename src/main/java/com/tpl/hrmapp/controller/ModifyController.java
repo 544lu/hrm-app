@@ -283,7 +283,7 @@ public class ModifyController {
         for (Job jobOld : jobList) {
             int index = 1;
             for (Job jobNew : works) {
-                if (jobNew.getId().intValue() == jobOld.getId().intValue()) {
+                if (jobNew.getId() != null && jobNew.getId().intValue() == jobOld.getId().intValue()) {
                     jobService.updateJob(jobNew);
                     break;
                 }

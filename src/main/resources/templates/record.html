@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作记录</title>
+</head>
+<body>
+<header>
+    <h1>操作记录</h1>
+</header>
+
+<section id="cd-timeline" class="cd-container"></section>
+<div class="easyui-panel">
+    <div id="pagination" class="easyui-pagination" data-options="
+            pageSize: 10,
+            onSelectPage: function(pageNumber, pageSize){
+                loadRecord(pageNumber,pageSize);
+                }">
+    </div>
+</div>
+<script>
+
+    $(function () {
+        var $timeline_block = $('.cd-timeline-block');
+        //hide timeline blocks which are outside the viewport
+        $timeline_block.each(function () {
+            if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
+                $(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
+            }
+        });
+        //on scolling, show/animate timeline blocks when enter the viewport
+        $(window).on('scroll', function () {
+            $timeline_block.each(function () {
+                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75 && $(this).find('.cd-timeline-img').hasClass('is-hidden')) {
+                    $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+                }
+            });
+        });
+
+        var totalRecords;
+        var html = "";
+        $.ajax({
+            url: 'http://localhost:8000/getRecord?page=' + 1 + '&rows=' + 10,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.total == 0) {
+                    $("header").html("<h1>无操作记录</h1>");
+					$(".cd-container").remove();
+                    $(".easyui-panel").remove();
+                    return;
+                }
+                var records = data.rows;
+                totalRecords = data.total;
+
+                for (record in records) {
+                    console.log("属性值为" + records[record].employeeName);
+                    if (records[record].operationCategory == '添加') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-picture.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>添加人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else if (records[record].operationCategory == '交接') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-movie.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>' + records[record].jobName + '交接给' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else if (records[record].operationCategory == '更新') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-location.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>更新人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-location.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>删除人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+            },
+        });
+        $('#pagination').pagination({
+            total: totalRecords,
+        });
+        $(".cd-container").append(html);
+    })
+
+    function loadRecord(pageNumber, pageSize) {
+        var totalRecords;
+        var html = "";
+        $.ajax({
+            url: 'http://localhost:8000/getRecord?page=' + pageNumber + '&rows=' + pageSize,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var records = data.rows;
+                totalRecords = data.total;
+                for (record in records) {
+                    if (records[record].operationCategory == '添加') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-picture.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>添加人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else if (records[record].operationCategory == '交接') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-movie.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>' + records[record].jobName + '交接给' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else if (records[record].operationCategory == '更新') {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-location.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>更新人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    } else {
+                        html = html + '<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-location">' +
+                            '<img src="../../images/cd-icon-location.svg" alt="Location">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>' + records[record].operationCategory + '</h2>' +
+                            '<p>删除人员' + records[record].employeeName + '</p>' +
+                            '<a href="#" class="cd-read-more">阅读更多</a>' +
+                            '<span class="cd-date">' + records[record].modifyTime.substr(0, 10) + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+            },
+        });
+        $('#pagination').pagination({
+            total: totalRecords,
+        });
+        $(".cd-container").html(html);
+    }
+</script>
+</body>
+</html>

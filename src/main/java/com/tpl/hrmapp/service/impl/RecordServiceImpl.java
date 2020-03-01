@@ -44,7 +44,7 @@ public class RecordServiceImpl implements RecordService {
 
                 Predicate idEqual = null;
                 if (null != modifier) {
-                    idEqual = cb.equal(root.<Integer>get("modifier"), modifier);
+                    idEqual = cb.equal(root.<String>get("modifier"), modifier);
                 }
                 if (null != idEqual) query.where(idEqual);
                 return idEqual;

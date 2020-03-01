@@ -42,8 +42,9 @@ public class RecordController {
             e.printStackTrace();
             return null;
         }
-        if (records.getSize() == 0) {
-            return null;
+        if (records.getContent().size() == 0) {
+            FrontView<Record> view = new FrontView<>(param.getPage(), null, 0);
+            return view;
         }
         List<Record> recordList = records.toList();
         long total = records.getTotalElements();
