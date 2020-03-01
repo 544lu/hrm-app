@@ -40,7 +40,8 @@ public class RecordController {
         } catch (Exception e) {
             log.error("在查询Record集合时出错");
             e.printStackTrace();
-            return null;
+            FrontView<Record> view = new FrontView<>(param.getPage(), null, 0);
+            return view;
         }
         if (records.getContent().size() == 0) {
             FrontView<Record> view = new FrontView<>(param.getPage(), null, 0);

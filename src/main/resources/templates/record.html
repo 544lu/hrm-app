@@ -57,7 +57,7 @@
                     console.log("属性值为" + records[record].employeeName);
                     if (records[record].operationCategory == '添加') {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-picture">' +
                             '<img src="../../images/cd-icon-picture.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
@@ -69,7 +69,7 @@
                             '</div>';
                     } else if (records[record].operationCategory == '交接') {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-movie">' +
                             '<img src="../../images/cd-icon-movie.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
@@ -93,7 +93,7 @@
                             '</div>';
                     } else {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-location" style="background: #95b8e7">' +
                             '<img src="../../images/cd-icon-location.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
@@ -126,7 +126,7 @@
                 for (record in records) {
                     if (records[record].operationCategory == '添加') {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-picture">' +
                             '<img src="../../images/cd-icon-picture.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
@@ -138,7 +138,7 @@
                             '</div>';
                     } else if (records[record].operationCategory == '交接') {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-movie">' +
                             '<img src="../../images/cd-icon-movie.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
@@ -162,7 +162,7 @@
                             '</div>';
                     } else {
                         html = html + '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-location">' +
+                            '<div class="cd-timeline-img cd-location" style="background: #95b8e7">' +
                             '<img src="../../images/cd-icon-location.svg" alt="Location">' +
                             '</div>' +
                             '<div class="cd-timeline-content">' +
