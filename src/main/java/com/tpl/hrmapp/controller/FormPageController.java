@@ -147,7 +147,9 @@ public class FormPageController {
                     List<Job> jobs = jobService.selectJobByKeywords(param.getValue());
                     for (Job job : jobs) {
                         Employee employee = employeeService.selectByJobId(job.getId());
-                        employeeList.add(employee);
+                        if (employee != null) {
+                            employeeList.add(employee);
+                        }
                     }
                 }
             } catch (Exception e) {
