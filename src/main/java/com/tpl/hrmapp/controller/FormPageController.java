@@ -166,8 +166,23 @@ public class FormPageController {
                 }
             }
             long total = employeeList.size();
-            EmployeeView view = new EmployeeView(param.getPage(), employeeList, total);
-            return view;
+            int pageNum = param.getPage();
+            int pageSize = param.getRows();
+            if (total < pageSize && pageNum == 1) {
+                EmployeeView view = new EmployeeView(param.getPage(), employeeList, total);
+                return view;
+            } else if (total >= pageSize && pageNum == 1) {
+                EmployeeView view = new EmployeeView(param.getPage(), employeeList.subList(0, pageSize), total);
+                return view;
+            } else {
+                if (employeeList.size() > pageNum * pageSize) {
+                    EmployeeView view = new EmployeeView(param.getPage(), employeeList.subList((pageNum - 1) * pageSize, pageNum * pageSize), total);
+                    return view;
+                } else {
+                    EmployeeView view = new EmployeeView(param.getPage(), employeeList.subList((pageNum - 1) * pageSize, employeeList.size()), total);
+                    return view;
+                }
+            }
         }
     }
 
